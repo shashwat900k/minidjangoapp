@@ -27,17 +27,20 @@ def home(request):
 def signup(request):
     return render(request, 'thesocialnetwork/signin.html.haml')
 
-def profile(request, user_info=None):
-    is_user = False
-    if user_info is None:
-        user_info = UserProfile.objects.get(user=request.user)
-        is_user = True
-    img = user_info.image.name
+
+def profile(request, user_id=None):
+    if user_id is None:
+        user_id = request.user.id
+    can_edit = (user_id == request.user.id)
+    user = User.objects.get(id=user_id)
+    profile = user.userprofile
+    img = profile.image.name
 
     if img == '':
         img = None
 
-    return render(request, 'thesocialnetwork/userprofile.html.haml', {'user_info': user_info, 'is_user': is_user, 'img': img})
+    return render(request, 'thesocialnetwork/userprofile.html.haml', {'profile': profile, 'can_edit': can_edit, 'img': img})
+
 
 def update_profile(request):
     if len(request.POST) == 0:
@@ -46,11 +49,15 @@ def update_profile(request):
         form = UserInfoForm(request.POST, request.FILES)
         if form.is_valid():
             form = form.cleaned_data
-            user_info = UserProfile.objects.select_for_update().filter(user=request.user)
-            user_info.update(dob=form['dob'],
+            user = User.objects.get(id=request.user)
+            user_profile = user.userprofile
+            # user_info = UserProfile.objects.select_for_update().filter(user=request.user)
+            user_profile.update(dob=form['dob'],
                             about=form['about'],
                     )
+            # TODO use single update
             if 'image' in request.FILES.keys():
+                # TODO this profile_pic path to settings only till photos
                 path = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'media', 'photos', str(request.user.id))
                 if os.path.exists(path):
                     shutil.rmtree(path)
@@ -59,28 +66,24 @@ def update_profile(request):
                 location = get_image_path(request.user, myfile.name)
                 fs = FileSystemStorage()
                 filename = fs.save(location, myfile)
-                user_info.update(image=filename)
+                user_profile.update(image=filename)
                 return HttpResponseRedirect(reverse('profile'))
 
 
 def search_users(request, data):
-    list_of_users = User.objects.filter(first_name__icontains=str(data)).exclude(id=int(request.user.id))
-    user_secret_info = []
-    user_image_location = []
-    for user in list_of_users:
-        user_secret_info.append(signing.dumps({'user_data': user.id}))
-        img = UserProfile.objects.get(user=user).image
-        import ipdb; ipdb.set_trace()
-        user_image_location.append(img)
-    user_data = zip(list_of_users, user_secret_info, user_image_location)
-    return render(request, 'thesocialnetwork/searched_user_list.html.haml', {'user_data': user_data})
+    users = User.objects.filter(first_name__icontains=str(data)).exclude(id=int(request.user.id))
+    # search_results = []
+    # user_secret_info = []
+    # user_image_location = []
+    # for user in list_of_users:
+        # # user_secret_info.append(signing.dumps({'user_data': user.id}))
+        # search_results.append({'img': user.userprofile.image
+        # user_image_location.append(img)
+
+    # user_data = zip(list_of_users, user_secret_info, user_image_location)
+    return render(request, 'thesocialnetwork/searched_user_list.html.haml', {'users': users})
 
 
-def fetch_particular_user(request, data):
-    user_id = signing.loads(data)['user_data']
-    user_data = User.objects.get(id=user_id)
-    user_info = UserProfile.objects.get(user=user_data)
-    return profile(request, user_info)
 
 def send_request(request, data):
     to_user_id = signing.loads(data)['user_data']

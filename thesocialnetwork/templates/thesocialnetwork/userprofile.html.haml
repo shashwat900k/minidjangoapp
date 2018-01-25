@@ -2,18 +2,18 @@
 
   .col-xs-9
     %ul.col-xs12.list-unstyled.components
-      %li.active First Name: {{user_info.user.first_name}}
-      %li.active Last Name: {{user_info.user.last_name}}
-      %li.active UserName: {{user_info.user.username}}
-      %li.active About you: {{user_info.about}}
-      %li.active Date of birth: {{user_info.dob}}
+      %li.active First Name: {{profile.user.first_name}}
+      %li.active Last Name: {{profile.user.last_name}}
+      %li.active UserName: {{profile.user.username}}
+      %li.active About you: {{profile.about}}
+      %li.active Date of birth: {{profile.dob}}
       %li.active Profile pic:
         {% if img %}
-          %img{:src => '{{user_info.image.url}}', :height => '100', :width => '100'}
+          %img{:src => '{{profile.image.url}}', :height => '100', :width => '100'}
         {% else %}
           %b No image uploaded
         {% endif %}
-    {% if is_user %}
+    {% if can_edit %}
       %a{:href => "{% url 'update_profile' %}"}
-        %button Update
+        %button Edit
     {% endif %}
