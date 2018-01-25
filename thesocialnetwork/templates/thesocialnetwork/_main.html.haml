@@ -1,0 +1,32 @@
+%link{'href': 'https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css', 'rel': 'stylesheet'}
+%link{:href => "http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css", :rel => "stylesheet"}
+{% load staticfiles %}
+%link{'href': '{% static "thesocialnetwork/header.css" %}', 'rel': 'stylesheet'}
+%nav.col-xs-3
+  .sidebar-header
+    %h3 Collapsible Sidebar
+  %ul.list-unstyled.components
+    %li.active
+      %a{:href => "{% url 'logout' %}"} Logout
+    %li
+      %a{:href => "{% url 'profile' %}"} Profile
+    %li
+      %a{:href => "{% url 'notifications:all_notifications' %}"} Notifications
+
+%header.col-xs-6
+  %search-bar.col-xs-12
+    .wrap.col-xs-12
+      .search.col-xs-12
+        %input.search-term.col-xs-10{:placeholder => "What do you seek?", :type => "text"}/
+        %button.search-button.col-xs-1{:type => "submit"}
+          %i.fa.fa-search
+
+%notification.col-xs-3
+  -# Notification
+  -# {% load notification_tags %}
+  -# {% include_notify_js_variables %}
+  -# {% render_notifications using request.user.notifications.active %}
+  -#
+%script{'src': 'https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'}
+%script{'src': "{% static 'thesocialnetwork/js/app.js' %}"}
+%script{'src': "{% static 'notify/notifyX.js' %}"}

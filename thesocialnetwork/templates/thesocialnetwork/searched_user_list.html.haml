@@ -1,0 +1,19 @@
+{% include 'thesocialnetwork/_main.html.haml' %}
+{% load staticfiles %}
+%link{'href': '{% static "thesocialnetwork/elements-hidden.css" %}', 'rel': 'stylesheet'}
+%search-result.col-xs-9
+  %table.col-xs-12
+    {% for user_info, user_secrets, img in user_data %}
+      %tr.col-xs-5
+        %td.col-xs-2
+          %a{:href => "/user/{{user_secrets}}"}
+            {{user_info.first_name}} {{user_info.last_name}}
+        %td.col-xs-3
+          {% if img %}
+            %img{:src => '{{img.url}}', :height => '100', :width => '100'}
+          {% endif %}
+        %td.col-xs-2
+          %button.send-friend-request Send Request
+            .user_info_hidden {{user_secrets}}
+    {% endfor %}
+

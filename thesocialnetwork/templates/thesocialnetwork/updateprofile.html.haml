@@ -1,0 +1,13 @@
+{% include 'thesocialnetwork/_main.html.haml' %}
+%form.col-xs-9{:action => "", :method => "post", :enctype => "multipart/form-data"}
+  {% csrf_token %}
+  %label{:for => "about"} About You
+  %input{:type => "text",:id => "about", :name => "about"}
+  %br
+  %label{:for => "dob"} Date of birth
+  %input{:type => "date",:id => "dob", :name => "dob"}
+  %br
+  %label{:for => "photo"} Profile Photo
+  %input{:type => "file",:id => "photo", :name => "image", :accept => "image/*"}
+  %br
+  %button Update Info

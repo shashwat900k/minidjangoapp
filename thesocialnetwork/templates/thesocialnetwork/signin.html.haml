@@ -1,0 +1,9 @@
+{% extends "admin/app_index.html" %}
+
+
+{% block content %}
+%h2 SignUp
+%a{:href => "{% url 'social:begin' 'google-oauth2' %}"} SignUp with Google
+%br/
+{% endblock %}
+

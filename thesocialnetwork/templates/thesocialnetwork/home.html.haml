@@ -1,0 +1,15 @@
+{% if user.is_authenticated %}
+  {% include "thesocialnetwork/_main.html.haml" %}
+  %p.display-4
+    Hello, {{user.username}}
+{% else %}
+  {% include "admin/app_index.html" %}
+  Existing User
+  %a.lead{:href => "{% url 'login' %}"}
+    Log in
+    %br
+    %br
+  New User
+  %a.lead{:href => "{% url 'signup' %}"}
+    Sign Up
+{% endif %}
