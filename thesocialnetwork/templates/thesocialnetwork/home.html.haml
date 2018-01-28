@@ -2,6 +2,23 @@
   {% include "thesocialnetwork/_main.html.haml" %}
   %p.display-4
     Hello, {{user.username}}
+    %img{:src => '{{user.userprofile.image.url}}', :height => '100', :width => '100'}
+  .user-feed.col-xs-6
+    {% if posts_by_friends != None %}
+      {% for row in posts_by_friends %}
+        %img{:src => '{{row.user.userprofile.image.url}}', :height => '40', :width => '40'}
+        %a{:href => 'profile/user/{{row.user.id}}'} {{row.user.first_name}} {{row.user.last_name}}
+        posted
+        %br
+        .content-container
+          {{row.text_content}}
+          %br
+          %button.like-post
+            .post-id
+              {{row.id}}
+            %i.fa.fa-thumbs-up{:aria-hidden => "true"}
+      {% endfor %}
+    {% endif %}
 {% else %}
   {% include "admin/app_index.html" %}
   Existing User

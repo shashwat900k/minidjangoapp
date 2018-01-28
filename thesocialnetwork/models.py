@@ -27,11 +27,32 @@ def create_user_profile(sender, instance, created, **kwargs):
 
 
 class UserFriendShip(models.Model):
-    # TODO use foreign keys
-    # eg: from_user = models.ForeignKey(User)
-    from_user_id = models.IntegerField()
-    to_user_id = models.IntegerField()
+    from_user = models.ForeignKey(User, related_name='from_user', null=True)
+    to_user = models.ForeignKey(User,  related_name='to_user', null=True)
     is_accepted = models.BooleanField(default=False)
     is_pending = models.BooleanField(default=True)
-    # TODO Remove identifier
-    identifier = models.TextField()
+    time_of_request = models.DateTimeField()
+
+
+class UserPost(models.Model):
+    user = models.ForeignKey(User)
+    text_content = models.TextField()
+    created_at = models.DateTimeField()
+    updated_at = models.DateTimeField(null=True)
+
+
+class UserLike(models.Model):
+    content_id = models.ForeignKey(UserPost)
+    liked_by_user = models.ForeignKey(User)
+
+    class Meta:
+        unique_together = ('content_id', 'liked_by_user')
+
+
+class UserComment(models.Model):
+    content_id = models.ForeignKey(UserPost)
+    commented_by_user = models.ForeignKey(User)
+    comment = models.TextField()
+
+    class Meta:
+        unique_together = ('content_id', 'commented_by_user')

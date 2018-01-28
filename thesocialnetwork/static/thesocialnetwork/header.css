@@ -38,4 +38,15 @@ nav{
   font-size: 2em;
 }
 
-/*Resize the wrap to see the search bar change!*/
+.write-something{
+  padding: 2em 0em 1em 4em;
+  float: left;
+}
+
+.content-container{
+  margin: 1em 0em 0em 1em;
+  min-height: 3em;
+  overflow: hidden;
+  background-color: #EFF0F1;
+  padding: 0.3em;
+}

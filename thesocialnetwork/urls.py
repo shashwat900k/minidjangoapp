@@ -23,17 +23,19 @@ from . import views
 
 urlpatterns = [
     url(r'^auth/', include('social_django.urls', namespace='social')),
-    # TODO Remove login endpoint
     url(r'^login/$', login, name='login'),
     url(r'^signup/$', views.signup, name='signup'),
     url(r'^logout/$', logout, name='logout'),
-
     url(r'^admin/', admin.site.urls),
-    url(r'^notifications/', include('notify.urls', namespace='notifications')),
-    url(r'^about/$', views.profile, name='profile'),
-    url(r'^update_info/$', views.update_profile, name='update_profile'),
-    url(r'search/(?P<data>.*)', views.search_users, name='search'),
-    url(r'send_request/(?P<data>.*)', views.send_request, name='send_request'),
-    url(r'^user/(?P<user_id>.*)', views.profile, name='particular_user'),
+    url(r'profile/user/(?P<user_id>.*)', views.profile, name='particular_user'),
+    url(r'^profile/$', views.profile, name='profile'),
+    url(r'^update_profile/$', views.update_profile, name='update_profile'),
+    url(r'^write_something/', views.write_something, name='write_something'),
+    url(r'search/(?P<data>.*)', views.search, name='search'),
+    url(r'send_request/(?P<user_id>.*)', views.send_request, name='send_request'),
+    url(r'user_reaction/(?P<data>.*)', views.user_reaction, name='user_reaction'),
+    url(r'accept_request/(?P<request_id>.*)', views.accept_request, name='accept_request'),
+    url(r'reject_request/(?P<request_id>.*)', views.reject_request, name='reject_request'),
+    url(r'show_notifications', views.show_notifications, name='show_notifications'),
     url(r'^$', views.home, name='home'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

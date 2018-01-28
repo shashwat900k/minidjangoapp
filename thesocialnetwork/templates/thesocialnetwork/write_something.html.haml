@@ -1,0 +1,10 @@
+{% if user.is_authenticated %}
+  {% include "thesocialnetwork/_main.html.haml" %}
+  .write-something.col-xs-6
+    %form{:action => "", :method => "post"}
+      {% csrf_token %}
+      %textarea{:name => 'content', :rows => '10', :cols => '70', :placeholder => 'Your thoughts..', :min => "3", :required => 'True'}
+      %br
+      %button Post
+
+{% endif %}

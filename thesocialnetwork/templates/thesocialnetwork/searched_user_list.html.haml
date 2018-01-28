@@ -3,17 +3,25 @@
 %link{'href': '{% static "thesocialnetwork/elements-hidden.css" %}', 'rel': 'stylesheet'}
 %search-result.col-xs-9
   %table.col-xs-12
-    {% for user_info, user_secrets, img in user_data %}
-      %tr.col-xs-5
+    {% for user, request_status in users %}
+      %tr.col-xs-7
         %td.col-xs-2
-          %a{:href => "/user/{{user_secrets}}"}
-            {{user_info.first_name}} {{user_info.last_name}}
+          %a{:href => "/profile/user/{{user.id}}"}
+            {{user.first_name}} {{user.last_name}}
         %td.col-xs-3
-          {% if img %}
-            %img{:src => '{{img.url}}', :height => '100', :width => '100'}
+          {% if user.userprofile.image.name != '' %}
+            %img{:src => '{{user.userprofile.image.url}}', :height => '100', :width => '100'}
           {% endif %}
         %td.col-xs-2
-          %button.send-friend-request Send Request
-            .user_info_hidden {{user_secrets}}
+          {% if request_status.is_accepted %}
+            Friends
+          {% elif request_status.is_pending != None %}
+            Friend Request Sent
+          {% elif request_status != None %}
+            Friend Request Sent
+          {% else %}
+            %button.send-friend-request Send Request
+              .user_info_hidden {{user.id}}
+          {% endif %}
     {% endfor %}
 

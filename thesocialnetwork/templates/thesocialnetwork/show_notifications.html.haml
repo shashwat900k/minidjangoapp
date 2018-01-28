@@ -1,0 +1,18 @@
+{% include 'thesocialnetwork/_main.html.haml' %}
+{% load staticfiles %}
+%link{'href': '{% static "thesocialnetwork/elements-hidden.css" %}', 'rel': 'stylesheet'}
+.notifications-container.col-xs-9
+  %table.notifications-table.col-xs-9
+    {% for request in  all_friend_requests %}
+      %tr.notifications-row.col-xs-9
+        %td.col-xs-5
+          %a{:href => "/profile/user/{{request.from_user.id}}"}
+            {{request.from_user.first_name}} {{request.from_user.last_name}}
+          sent you a friend request
+        %td.col-xs-1
+          %button.accept-request Accept
+            .user_info_hidden {{request.id}}
+        %td.col-xs-1
+          %button.reject-request Reject
+            .user_info_hidden {{request.id}}
+  {% endfor %}
