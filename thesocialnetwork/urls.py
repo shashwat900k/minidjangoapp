@@ -23,7 +23,7 @@ from . import views
 
 urlpatterns = [
     url(r'^auth/', include('social_django.urls', namespace='social')),
-    url(r'^login/$', login, name='login'),
+    url(r'^login/$', views.login, name='login'),
     url(r'^signup/$', views.signup, name='signup'),
     url(r'^logout/$', logout, {'next_page': '/'}, name='logout'),
     url(r'^admin/', admin.site.urls),

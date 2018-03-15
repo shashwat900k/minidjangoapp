@@ -1,0 +1,11 @@
+{% extends "admin/app_index.html" %}
+{% load staticfiles %}
+%link{'href': '{% static "thesocialnetwork/header.css" %}', 'rel': 'stylesheet'}
+
+
+{% block content %}
+.container-div
+  %h2 Login
+  %a{:href => "{% url 'social:begin' 'google-oauth2' %}"} Login with Google
+  %br/
+{% endblock %}

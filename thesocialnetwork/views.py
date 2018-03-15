@@ -34,6 +34,8 @@ def home(request):
 def signup(request):
     return render(request, 'thesocialnetwork/signin.html.haml')
 
+def login(request):
+    return render(request, 'thesocialnetwork/login.html.haml')
 
 def profile(request, user_id=None):
     if user_id is None:
