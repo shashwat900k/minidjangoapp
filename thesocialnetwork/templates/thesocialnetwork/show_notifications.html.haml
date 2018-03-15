@@ -1,18 +1,47 @@
 {% include 'thesocialnetwork/_main.html.haml' %}
 {% load staticfiles %}
 %link{'href': '{% static "thesocialnetwork/elements-hidden.css" %}', 'rel': 'stylesheet'}
-.notifications-container.col-xs-9
-  %table.notifications-table.col-xs-9
+.notifications-container.col-xs-6
+  %table.notifications-table.col-xs-12
     {% for request in  all_friend_requests %}
-      %tr.notifications-row.col-xs-9
-        %td.col-xs-5
-          %a{:href => "/profile/user/{{request.from_user.id}}"}
-            {{request.from_user.first_name}} {{request.from_user.last_name}}
-          sent you a friend request
-        %td.col-xs-1
-          %button.accept-request Accept
-            .user_info_hidden {{request.id}}
-        %td.col-xs-1
-          %button.reject-request Reject
-            .user_info_hidden {{request.id}}
-  {% endfor %}
+      %tr.notifications-row.col-xs-12.notification-row
+        {% if request.is_pending %}
+          %td.col-xs-8
+            {% if request.from_user.userprofile.image %}
+              %img{:src => '{{request.from_user.userprofile.image.url}}', :height => '60', :width => '60'}
+            {% endif %}
+            %a{:href => "/profile/user/{{request.from_user.id}}"}
+              {{request.from_user.first_name}} {{request.from_user.last_name}}
+            sent you a friend request
+          %td.col-xs-1
+            %button.accept-request Accept
+              .user_info_hidden {{request.id}}
+          %td.col-xs-1
+            %button.reject-request Reject
+              .user_info_hidden {{request.id}}
+          %br
+        {% else %}
+          %td.col-xs-8
+            {% if request.to_user.userprofile.image %}
+              %img{:src => '{{request.to_user.userprofile.image.url}}', :height => '60', :width => '60'}
+            {% endif %}
+            %a{:href => "/profile/user/{{request.to_user.id}}"}
+              {{request.to_user.first_name}} {{request.to_user.last_name}}
+            accepted your friend request
+        {% endif %}
+    {% endfor %}
+    {% for reaction in user_reaction %}
+       %tr.notifications-row.col-xs-12.notification-row
+          %td.col-xs-8
+            {% if reaction.liked_by_user.userprofile.image %}
+              %img{:src => '{{reaction.liked_by_user.userprofile.image.url}}', :height => '60', :width => '60'}
+            {% endif %}
+            %a{:href => "/profile/user/{{reaction.liked_by_user.id}}"}
+              {{reaction.liked_by_user.first_name}} {{reaction.liked_by_user.last_name}}
+            liked your post
+            %br
+            "{{reaction.content_id.text_content|slice:":50"}}..."
+
+    {% endfor %}
+
+

@@ -25,7 +25,7 @@ urlpatterns = [
     url(r'^auth/', include('social_django.urls', namespace='social')),
     url(r'^login/$', login, name='login'),
     url(r'^signup/$', views.signup, name='signup'),
-    url(r'^logout/$', logout, name='logout'),
+    url(r'^logout/$', logout, {'next_page': '/'}, name='logout'),
     url(r'^admin/', admin.site.urls),
     url(r'profile/user/(?P<user_id>.*)', views.profile, name='particular_user'),
     url(r'^profile/$', views.profile, name='profile'),
@@ -37,5 +37,7 @@ urlpatterns = [
     url(r'accept_request/(?P<request_id>.*)', views.accept_request, name='accept_request'),
     url(r'reject_request/(?P<request_id>.*)', views.reject_request, name='reject_request'),
     url(r'show_notifications', views.show_notifications, name='show_notifications'),
+    url(r'^myfriends', views.show_friends, name='friends'),
+    url(r'^user_content', views.user_content, name='user_content'),
     url(r'^$', views.home, name='home'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

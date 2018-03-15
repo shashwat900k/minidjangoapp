@@ -1,0 +1,17 @@
+{% include 'thesocialnetwork/_main.html.haml' %}
+{% load staticfiles %}
+%link{'href': '{% static "thesocialnetwork/elements-hidden.css" %}', 'rel': 'stylesheet'}
+.friend-list.col-xs-4
+  %table.col-xs-12
+    {% for friend in friend_list %}
+      %tr.col-xs-12.user-friend-list
+        %td.col-xs-6
+          %a{:href => "/profile/user/{{friend.id}}"}
+            {% if friend.userprofile.image.name != '' %}
+              %img{:src => '{{friend.userprofile.image.url}}', :height => '70', :width => '70'}
+              %nbsp&nbsp&nbsp
+            {% endif %}
+            {{friend.first_name}} {{friend.last_name}}
+    {% endfor %}
+
+

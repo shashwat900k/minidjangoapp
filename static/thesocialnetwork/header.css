@@ -50,3 +50,78 @@ nav{
   background-color: #EFF0F1;
   padding: 0.3em;
 }
+
+.comment-box{
+  margin: 1em 0em 0em 1em;
+  padding-left: 0.5em;
+}
+
+.post-button-container{
+  padding: 0.5em 0em 1em 0.4em;
+}
+
+.notification-row{
+  padding-bottom: 0.5em;
+}
+.search-user-list{
+  padding: 0.5em;
+  margin-left: 2em;
+}
+
+.friend-result{
+  padding: 0em;
+  float: right;
+}
+.container-div{
+  font-size: 18px;
+  text-align: center;
+}
+.list-element a{
+  color: #fff;
+  font-size: 22px;
+}
+.list-element{
+  padding-bottom: 18px;
+}
+.nav-bar{
+  background-color: #6DBEDA;
+}
+.list-unstyled{
+  margin-top: 90px;
+}
+.profile-container{
+  text-align: center;
+}
+.profile-table{
+  margin: 0 auto;
+  margin-left: 18em;
+  margin-top: 3em;
+}
+.profile-row .user-data{
+  border-bottom: 0.6em solid transparent;
+  font-size: 1.3em;
+  color: #6DBEDA;
+}
+.profile-row td{
+  border-right: 1.3em solid transparent;
+  text-align: left;
+  font-weight: 600;
+}
+.edit-button{
+  color: #6DBEDA;
+  background-color: #fff;
+  margin-left: -18em;
+}
+.save-update{
+  margin-left: 27em;
+  color: #6DBEDA;
+  background-color: #fff;
+}
+.display-4{
+  font-size: 1em;
+  font-weight: 500;
+  float: right;
+}
+.search-result-table{
+  margin: 0 auto;
+}

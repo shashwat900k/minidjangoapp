@@ -1,22 +1,40 @@
 {% if user.is_authenticated %}
   {% include "thesocialnetwork/_main.html.haml" %}
-  %p.display-4
-    Hello, {{user.username}}
-    %img{:src => '{{user.userprofile.image.url}}', :height => '100', :width => '100'}
+  .display-4.col-xs-3
+    .display-greetings.col-xs-5
+      Hello,
+      %br {{user.username}}
+    .col-xs-7.user-image
+      {% if user.userprofile.image %}
+        %img{:src => '{{user.userprofile.image.url}}', :height => '100', :width => '100'}
+      {% endif %}
   .user-feed.col-xs-6
-    {% if posts_by_friends != None %}
-      {% for row in posts_by_friends %}
-        %img{:src => '{{row.user.userprofile.image.url}}', :height => '40', :width => '40'}
-        %a{:href => 'profile/user/{{row.user.id}}'} {{row.user.first_name}} {{row.user.last_name}}
-        posted
-        %br
-        .content-container
-          {{row.text_content}}
+    {% if data != None %}
+      {% for row, reaction in data %}
+      .user-info-container.col-xs-12
+        {% if row.user.userprofile.image %}
+            %img{:src => '{{row.user.userprofile.image.url}}', :height => '30', :width => '30'}
+        {% endif %}
+          %a{:href => 'profile/user/{{row.user.id}}'} {{row.user.first_name}} {{row.user.last_name}}
+          posted
           %br
-          %button.like-post
-            .post-id
-              {{row.id}}
-            %i.fa.fa-thumbs-up{:aria-hidden => "true"}
+      .content-container.col-xs-12
+        {{row.text_content}}
+        %br
+        %button.like-post
+          %i.fa.fa-thumbs-up{:aria-hidden => "true"}
+          .post-id
+            {{row.id}}
+        {% for user in reaction %}
+          %a{:href => 'profile/user/{{user.liked_by_user.id}}'}
+            {{user.liked_by_user.first_name}} {{user.liked_by_user.last_name}}
+          {% if forloop.last %}
+            liked this
+          {% else %}
+            ,
+          {% endif %}
+        {% endfor %}
+      %br
       {% endfor %}
     {% endif %}
 {% else %}

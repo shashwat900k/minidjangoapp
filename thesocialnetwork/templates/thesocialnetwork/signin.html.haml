@@ -1,9 +1,12 @@
 {% extends "admin/app_index.html" %}
+{% load staticfiles %}
+%link{'href': '{% static "thesocialnetwork/header.css" %}', 'rel': 'stylesheet'}
 
 
 {% block content %}
-%h2 SignUp
-%a{:href => "{% url 'social:begin' 'google-oauth2' %}"} SignUp with Google
-%br/
+.container-div
+  %h2 SignUp
+  %a{:href => "{% url 'social:begin' 'google-oauth2' %}"} SignUp with Google
+  %br/
 {% endblock %}
 

@@ -1,19 +1,31 @@
 {%include 'thesocialnetwork/_main.html.haml' %}
 
-  .col-xs-9
-    %ul.col-xs12.list-unstyled.components
-      %li.active First Name: {{profile.user.first_name}}
-      %li.active Last Name: {{profile.user.last_name}}
-      %li.active UserName: {{profile.user.username}}
-      %li.active About you: {{profile.about}}
-      %li.active Date of birth: {{profile.dob}}
-      %li.active Profile pic:
-        {% if img %}
-          %img{:src => '{{profile.image.url}}', :height => '100', :width => '100'}
-        {% else %}
-          %b No image uploaded
-        {% endif %}
+  .col-xs-9.profile-container
+    %table.col-xs12.list-unstyled.profile-table
+      %tr.active.profile-row
+        %td First Name:
+        %td.user-data {{profile.user.first_name}}
+      %tr.active.profile-row
+        %td Last Name:
+        %td.user-data {{profile.user.last_name}}
+      %tr.active.profile-row
+        %td UserName:
+        %td.user-data {{profile.user.username}}
+      %tr.active.profile-row
+        %td About you:
+        %td.user-data {{profile.about}}
+      %tr.active.profile-row
+        %td Date of birth:
+        %td.user-data {{profile.dob}}
+      %tr.active.profile-row
+        %td Profile pic:
+        %td.user-data
+          {% if img %}
+            %img{:src => '{{profile.image.url}}', :height => '100', :width => '100'}
+          {% else %}
+            %b No image uploaded
+          {% endif %}
     {% if can_edit %}
       %a{:href => "{% url 'update_profile' %}"}
-        %button Edit
+        %button.edit-button Edit
     {% endif %}

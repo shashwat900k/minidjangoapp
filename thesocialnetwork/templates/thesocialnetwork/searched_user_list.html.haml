@@ -1,27 +1,34 @@
 {% include 'thesocialnetwork/_main.html.haml' %}
 {% load staticfiles %}
 %link{'href': '{% static "thesocialnetwork/elements-hidden.css" %}', 'rel': 'stylesheet'}
-%search-result.col-xs-9
-  %table.col-xs-12
-    {% for user, request_status in users %}
-      %tr.col-xs-7
+.search-result.col-xs-9
+  %table.col-xs-12.search-result-table
+    {% for user_data, request_status in users %}
+      %tr.col-xs-7.search-user-list
         %td.col-xs-2
-          %a{:href => "/profile/user/{{user.id}}"}
-            {{user.first_name}} {{user.last_name}}
-        %td.col-xs-3
-          {% if user.userprofile.image.name != '' %}
-            %img{:src => '{{user.userprofile.image.url}}', :height => '100', :width => '100'}
-          {% endif %}
+          %a{:href => "/profile/user/{{user_data.id}}"}
+            {% if user_data.userprofile.image.name != '' %}
+              %img{:src => '{{user_data.userprofile.image.url}}', :height => '70', :width => '70'}
+              %nbsp&nbsp&nbsp
+            {% endif %}
+            {{user_data.first_name}} {{user_data.last_name}}
         %td.col-xs-2
-          {% if request_status.is_accepted %}
-            Friends
-          {% elif request_status.is_pending != None %}
-            Friend Request Sent
-          {% elif request_status != None %}
-            Friend Request Sent
-          {% else %}
+          {% if request_status == False %}
             %button.send-friend-request Send Request
-              .user_info_hidden {{user.id}}
+              .user_info_hidden {{user_data.id}}
+          {% elif request_status.is_accepted %}
+            Friends
+          {% elif request_status.to_user == user and request_status.is_pending %}
+            %button.accept-request Accept Request
+              .user_info_hidden {{request_status.id}}
+            %button.reject-request Reject Request
+              .user_info_hidden {{request_status.id}}
+          {% elif request_status.from_user == user and request_status.is_pending != None %}
+            Friend Request Sent
+          {% elif request_status.to_user == user and request_status.is_pending == False and request_status.is_accepted == False %}
+            You rejected request
+          {% elif request_status.is_pending == False and request_status.is_accepted == False %}
+            Friend Request Sent
           {% endif %}
     {% endfor %}
 

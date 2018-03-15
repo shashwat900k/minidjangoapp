@@ -1,0 +1,25 @@
+{% include 'thesocialnetwork/_main.html.haml' %}
+{% load staticfiles %}
+%link{'href': '{% static "thesocialnetwork/elements-hidden.css" %}', 'rel': 'stylesheet'}
+{% if user_content != None %}
+  .user-feed.col-xs-6
+    {% for post, reaction in user_content %}
+      .user-info-container.col-xs-12
+        You posted this on {{post.created_at}}
+        %br
+      .content-container.col-xs-12
+        {{post.text_content}}
+        %br
+        {% for user in reaction %}
+          %a{:href => 'profile/user/{{user.liked_by_user.id}}'}
+            {{user.liked_by_user.first_name}} {{user.liked_by_user.last_name}}
+          {% if forloop.last %}
+            liked this
+          {% else %}
+            ,
+          {% endif %}
+        {% endfor %}
+      %br
+    {% endfor %}
+{% endif %}
+
