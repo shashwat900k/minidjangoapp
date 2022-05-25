@@ -34,7 +34,7 @@ pycparser==2.18
 pycrypto==2.6.1
 pyflakes==1.6.0
 Pygments==2.2.0
-PyJWT==1.5.3
+PyJWT==2.4.0
 pytest==3.2.3
 python-gettext==3.0
 python-openid==2.2.5
